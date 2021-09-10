@@ -1,0 +1,68 @@
+a[href="/login"] {
+    color: white
+}
+a[href="/logout"] {
+    color: white
+}
+
+.form,
+.form .field {
+    display: flex;
+    flex-direction: column;
+}
+
+.form .field {
+    margin: 10px 0px;
+}
+
+input, textarea {
+    padding: 10px;
+}
+
+textarea {
+    border: none;
+    resize: none;
+    border: 1px solid #f7f7f7;
+    border-radius: 0 !important;
+    box-shadow: inset 0 2px 3px rgb(0 0 0 / 10%);
+    color: #696969;
+    width: 100%;
+    height: 300px;
+}
+
+button {
+    margin: 15px;
+    background-color: #e83d84;
+    color: #fff;
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    color: #999;
+    background-color: #efefef;
+}
+
+button:disabled:hover {
+    box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+}
+
+select {
+    border: none;
+    box-shadow: inset 0 2px 3px rgb(0 0 0 / 10%);
+    background-color: white;
+    padding: 10px;
+}
+
+.Admin .table span{
+    margin: 0 10px;
+}
+
+.Admin .table #item {
+    padding: 5px;
+    user-select: none;
+}
+
+.Admin .table #item i {
+    cursor: pointer;
+}
