@@ -8,7 +8,8 @@
     "node": ">=12.20.0"
   },
   "scripts": {
-    "build": "tsc",
+    "postinstall": "cd client && npm install",
+    "build": "tsc && cd client && npm run build && cd .. && mkdir dist/client && mkdir dist/client/build && cp -r client/build/* dist/client/build/ && cp -r emails/ dist/emails",
     "dev": "nodemon",
     "start": "node dist/app.js",
     "test": "NODE_ENV=testing mocha --timeout 10000 -r ts-node/register test/*.ts --exit",

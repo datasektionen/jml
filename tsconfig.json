@@ -12,6 +12,12 @@
           "node",
       ],
       "esModuleInterop": true,
-      "inlineSourceMap": true
-    }
+      "inlineSourceMap": true,
+      "resolveJsonModule": true
+    },
+    "include": [
+      "./",
+      "./emails/answer.md",
+      "./emails/new_errand.md"
+    ]
   }

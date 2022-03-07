@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import path from "path";
 
 import apiRouter from './routes/api';
 // Loads env variables
@@ -44,8 +45,8 @@ if (configuration.NODE_ENV === "development") {
 app.use("/api", apiRouter);
 
 // Serve React app
-app.use(express.static("../client/build"));
-// app.get("*", (req, res) => )
+app.use(express.static("./client/build"));
+app.get("*", (req, res) => res.sendFile(path.resolve(__dirname, "client", "build", "index.html")))
 
 const PORT = configuration.PORT;
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
