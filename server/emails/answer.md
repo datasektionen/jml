@@ -1,4 +1,10 @@
-Person (vem) har svarat på ditt meddelande:
+{USER} har svarat på ditt meddelande:
+
+```
+{ORIGINAL}
+```
+
+Svaret:
 
 ```
 {MEDDELANDE}

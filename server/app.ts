@@ -5,10 +5,33 @@ import cors from 'cors';
 import apiRouter from './routes/api';
 // Loads env variables
 import configuration from './common/configuration';
+import prisma from './common/client';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+setInterval(() => {
+    (async () => {
+        const cases = await prisma.case.findMany();
+        const toDelete = [];
+        for (const c of cases) {
+            if (c.delete && c.delete?.getTime() > Date.now()) {
+                toDelete.push(c.id)
+            }
+        }
+        for (const id of toDelete) {
+            prisma.case.delete({
+                where: {
+                    id
+                }
+            })
+            .then(() => {
+                console.log(`Deleted ${id}`)
+            })
+        }
+    })()
+}, 3600*1000)
 
 // Log requests to console
 // Don't log when NODE_ENV == testing

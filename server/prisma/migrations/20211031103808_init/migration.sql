@@ -8,6 +8,7 @@ CREATE TABLE "Case" (
     "contactMethod" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "delete" TIMESTAMP(3),
 
     PRIMARY KEY ("id")
 );

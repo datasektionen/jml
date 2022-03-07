@@ -37,7 +37,7 @@ const Answer = ({ item, killMe, loading: disabled }) => {
                     {error}
                 </div>
             }
-            {item.contactMethod === "email" &&
+            {item.contactMethod === "email" && !item.delete &&
                 <>
                     <textarea
                         value={answer}
@@ -46,10 +46,13 @@ const Answer = ({ item, killMe, loading: disabled }) => {
                         placeholder="Skriv ditt svar som skickas via e-post"
                     />
                     <button
-                        disabled={answer.length === 0 || loading || disabled}
-                        onClick={() => submit(item.id, { content: answer })}
+                        disabled={answer.length === 0 || loading}
+                        onClick={() => submit(item.id, { content: answer, original: item.content })}
                     >Skicka svar</button>
                 </>
+            }
+            {item.contactMethod === "email" && item.delete &&
+                <p>Du har redan besvarat detta fall.</p>
             }
         </div>
     )

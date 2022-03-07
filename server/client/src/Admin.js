@@ -77,9 +77,11 @@ const Admin = () => {
                 <div className="table">
                     <span><b>Id</b></span>
                     <span><b>Tid</b></span>
-                    <span><b>Namn</b></span>
+                    <span><b>Namn/Nummer</b></span>
                     {!hasFirstFetch &&
-                        <p>Laddar...</p>
+                        <div style={{textAlign: "center"}}>
+                            <p>Laddar...</p>
+                        </div>
                     }
                     {items.map(i =>
                         <div key={"item-"+i.id}>
@@ -92,6 +94,7 @@ const Admin = () => {
                                 </span>
                                 <span>
                                     {i.name ?? "Inget namn angett"}
+                                    {i.phone && " " + i.phone}
                                 </span>
                                 <span>
                                     {renderContactMethod(i.contactMethod)}

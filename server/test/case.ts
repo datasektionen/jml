@@ -95,7 +95,7 @@ describe("case tests", () => {
             });
 
             it("should receive 200 with valid token", async () => {
-                const id = (await create(null, "Hej hej", "d-sys@d.kth.se", null)).body.id;
+                const id = (await create("", "Hej hej", "d-sys@d.kth.se", null, null)).body.id;
                 chai.request(app)
                 .post(`/api/case/answer/${id}`)
                 .set("Authorization", "Bearer admin")
@@ -115,7 +115,7 @@ describe("case tests", () => {
             });
 
             it("should receive 200 with valid token", async () => {
-                const id = (await create(null, "Hej hej", null, null)).body.id;
+                const id = (await create("", "Hej hej", "", null, null)).body.id;
                 chai.request(app)
                 .delete(`/api/case/${id}`)
                 .set("Authorization", "Bearer admin")

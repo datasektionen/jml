@@ -42,6 +42,7 @@ const Home = () => {
     }
 
     const submit = () => {
+        if (loading) return
         setLoading(true)
         const body = {
             content,
@@ -69,16 +70,30 @@ const Home = () => {
             <Header title="Anmälan och frågor" />
             <div id="content">
                 <p>
-                    Hej! Jag heter Tobias och är studiesocial ledamot och skyddsombud på Fysiksektionen. Det innebär bland annat att jag är ansvarig för att se till att alla studenter på sektionen känner sig trygga och mår bra, både fysiskt och psykiskt. Det medför även att jag har tystnadsplikt enligt lag.
+                    Hej! Vi heter Amanda och Ebba och är tillsammans Jämlikhetsnämndens ordförande. Vår uppgift är att se till att du känner dig trygg, inkluderad och välkommen, men framförallt att alla sektionens medlemmar behandlas lika.
                 </p>
                 <p>
-                    Här kan du berätta om allt ifrån en kränkande behandling du blivit utsatt för (både på och utanför KTH) till ett dåligt uppförande av en föreläsare eller problem med psykiska ohälsa. Om du tex blivit utsatt för trakasserier kan jag hjälpa dig att gå vidare med en anmälan till KTH men då går det tyvärr inte att vara anonym. Vill du däremot bara ha ett svar går det bra.
+                    Här kan du göra två saker:
+                </p>
+                <ul>
+                    <li>
+                        Ställa en fråga till oss (egentligen om vad som helst, men vi kanske inte är så bra på att svara på icke-JML-frågor 😉)
+                    </li>
+                    <li>
+                        Berätta om någonting som du tycker att vi behöver veta. Du kan berätta om allt ifrån en kränkande behandling du blivit utsatt för (både på och utanför KTH) till ett dåligt uppförande av en föreläsare eller problem med psykiska ohälsa. Om du tex blivit utsatt för trakasserier kan jag hjälpa dig att gå vidare med en anmälan till KTH men då går det tyvärr inte att vara anonym
+                    </li>
+                </ul>
+                <p>
+                    Värt för dig att veta är att vi inte har officiell tystnadsplikt, men vi kommer självklart inte sprida vidare det du berättar iallafall ❤️.
                 </p>
                 <p>
-                    Sist men inte minst vill jag bara säga att det alltid går bra att rycka tag i mig om du ser mig på (eller utanför) campus!
+                    Det går också alltid bra att rycka tag i oss om du ser oss på (eller utanför) campus!
                 </p>
                 <p>
-                    Skriv något om att jml inte ser epostadresser. Hen fyller bara i ett formulär så skickar systemet ett mejl.
+                    Som systemet är uppbyggt nu så kommer vi inte att se din mailadress, men (om du anger det) så kommer vi se ditt namn och ditt telefonnummer. Däremot kommer systemet att skicka svaret till dig på den mailadress du uppgett (om du uppgett någon). Alla uppgifter du lämnar kommer vara kvar i systemet tills vi svarat (och sedan 7 dagar till), innan de automatiskt tas bort. Däremot kan vi komma att använda verkliga händelser som berättas om genom det här systemet (i anonymiserad och ändrad form så klart!) till cases för olika workshops (om det känns relevant).
+                </p>
+                <p>
+                    Om du har några frågor till oss om formuläret eller annars så får du jättegärna maila på <a href="mailto:jamllikordf@d.kth.se">jamllikordf@d.kth.se</a> eller rycka tag i oss på annat sätt! (eller fylla i formuläret så klart 🙂)
                 </p>
                 <div className="form">
                     <div className="field">
@@ -142,7 +157,7 @@ const Home = () => {
                         />
                     </div>
                     <button
-                        disabled={disabled}
+                        disabled={disabled || loading}
                         onClick={submit}
                     >Skicka</button>
                 </div>

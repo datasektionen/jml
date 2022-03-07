@@ -4,6 +4,7 @@ import configuration from '../../common/configuration';
 import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
+import { KthUser } from 'common/types';
 
 const createdEmail = fs.readFileSync(path.join(__dirname, "..", "..", "emails", "new_errand.md")).toString();
 const answerEmail = fs.readFileSync(path.join(__dirname, "..", "..", "emails", "answer.md")).toString();
@@ -68,6 +69,8 @@ export const getAll = async (): Promise<ApiResponse> => {
                 updatedAt: true,
                 contactMethod: true,
                 name: true,
+                phone: true,
+                delete: true,
             }
         });
     
@@ -81,7 +84,7 @@ export const getAll = async (): Promise<ApiResponse> => {
     }
 };
 
-export const answer = (id: number, content: string): Promise<ApiResponse> => {
+export const answer = (id: number, content: string, original: string, user: KthUser): Promise<ApiResponse> => {
     return new Promise(async (resolve, reject) => {
         try {
             const object = await prisma.case.findUnique({
@@ -91,12 +94,17 @@ export const answer = (id: number, content: string): Promise<ApiResponse> => {
             });
 
             if (object?.email) {
-                const status = await sendMail([object.email], "Din fråga är besvarad", answerEmail.replace("{MEDDELANDE}", content));
+                // ddos possibility here
+                const status = await sendMail([object.email], "Din fråga är besvarad", answerEmail.replace("{MEDDELANDE}", content).replace("{USER}", `${user?.first_name} ${user?.last_name} (${user?.user})`).replace("{ORIGINAL}", original));
 
                 if (status) {
-                    await prisma.case.delete({
+
+                    await prisma.case.update({
                         where: {
-                            id,
+                            id
+                        },
+                        data: {
+                            delete: new Date(Date.now() + 3600*24*7*1000)
                         }
                     });
         

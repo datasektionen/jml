@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Redirect, Route, Switch } from 'react-router-dom';
 import Methone from 'methone';
 import Home from './Home';
@@ -57,7 +57,7 @@ const App = () => {
                     }} />
                     <Route exact path="/token/:token" render={({ match }) => {
                         localStorage.setItem("token", match.params.token)
-                        return <Redirect to="/admin" />
+                        return <Redirect to="/" />
                     }} />
                     {/* 404, redirect to home */}
                     <Route>
