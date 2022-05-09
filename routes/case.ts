@@ -2,7 +2,7 @@ import express from 'express';
 import { body, param, check } from 'express-validator';
 import { StatusCodes } from 'http-status-codes';
 import { create, deleteCase, getAll, answer } from '../functions/api/case';
-import { authorizePls, validationCheck } from '../common/middlewares';
+import { authorizePls, validationCheck, verifyRecaptchaValue } from '../common/middlewares';
 const router = express.Router();
 
 router.post("/create",
@@ -24,7 +24,10 @@ router.post("/create",
         .isString().withMessage("should be a string")
         .trim()
         .isIn(["no", "irl", "phone", "email"]).withMessage("should be one of 'irl', 'phone', 'email' and 'no'"),
+    body("g-recaptcha-response").exists().withMessage("is required")
+    .isString(),
     validationCheck,
+    verifyRecaptchaValue,
 async (req, res) => {
 
     const { content, contactMethod, email, phone, name } = req.body;

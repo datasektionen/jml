@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Header } from 'methone';
 import { url } from './App';
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Home = () => {
 
@@ -13,6 +14,8 @@ const Home = () => {
     const [select, setSelect] = useState("no")
     const [disabled, setDisabled] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [recaptchaSuccess, setRecaptchaSuccess] = useState(false);
+    const [recaptchaValue, setRecaptchaValue] = useState("");
 
     const selectItems = [
         {label: "Vill inte bli kontaktad", key: "no"},
@@ -39,6 +42,8 @@ const Home = () => {
         setPhone("")
         setContent("")
         setSelect("no")
+        setRecaptchaSuccess(false)
+        setRecaptchaValue("")
     }
 
     const submit = () => {
@@ -53,7 +58,10 @@ const Home = () => {
         if (select === "phone") body["phone"] = phone
         if (name.length !== 0) body["name"] = name
 
-        axios.post(url("/api/case/create"), body)
+        axios.post(url("/api/case/create"), {
+            ...body,
+            "g-recaptcha-response": recaptchaValue,
+        })
         .then(res => {
             clear()
         })
@@ -156,8 +164,15 @@ const Home = () => {
                             onChange={e => setContent(e.target.value)}
                         />
                     </div>
+                    <ReCAPTCHA
+                        sitekey={process.env.REACT_APP_RECAPTCHA_PUBLIC_KEY}
+                        onChange={(data) => {
+                            setRecaptchaSuccess(true);
+                            setRecaptchaValue(data)
+                        }}
+                    />
                     <button
-                        disabled={disabled || loading}
+                        disabled={disabled || loading || !recaptchaSuccess}
                         onClick={submit}
                     >Skicka</button>
                 </div>

@@ -12,3 +12,21 @@ See [configuration.ts](server/common/configuration.ts)
 | SPAM_API_KEY              | -                                         | Spam key                                                  |
 | SEND_MAIL_IN_DEVELOPMENT  | false                                     | Should emails be sent in development?                     |
 | DEVELOPMENT_ADMIN_EMAIL   | -                                         | What email to send emails to in development               |
+| GOOGLE_RECAPTCHA_API_URL  | https://www.google.com/recaptcha/api/siteverify | URL to reCAPTCHA API                                |
+| RECAPTCHA_SECRET_KEY       | -                                        | Use this secret key for communication between your site and reCAPTCHA |
+| REACT_APP_RECAPTCHA_PUBLIC_KEY | -                                    | Use this site key in the HTML code your site serves to users |
+
+## reCAPTCHA
+This app uses reCAPTCHA v2
+
+Get an API key from Google.
+
+If using for localhost, set `localhost` as domain when creating key.
+
+### Mocking
+If you have no API key you could also mock the API by setting up an endpoint that responds to POST requests and responds with
+```ts
+{
+    "success": true|false
+}
+```

@@ -18,10 +18,17 @@ const configuration = {
     SEND_MAIL_IN_DEVELOPMENT: Boolean(process.env.SEND_MAIL_IN_DEVELOPMENT ?? false),
     // What user to send emails to in development
     DEVELOPMENT_ADMIN_EMAIL: process.env.DEVELOPMENT_ADMIN_EMAIL,
+    RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY,
+    GOOGLE_RECAPTCHA_API_URL: process.env.GOOGLE_RECAPTCHA_API_URL ?? "https://www.google.com/recaptcha/api/siteverify",
 };
 
 if (configuration.NODE_ENV === "development" && configuration.SEND_MAIL_IN_DEVELOPMENT === true && !configuration.SPAM_API_KEY) {
     console.log("No SPAM_API_KEY set. Exiting...");
+    process.exit(-1);
+}
+
+if (!configuration.RECAPTCHA_SECRET_KEY) {
+    console.log("No RECAPTCHA_SECRET_KEY set. Exiting...");
     process.exit(-1);
 }
 

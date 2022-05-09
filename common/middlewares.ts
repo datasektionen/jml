@@ -8,6 +8,29 @@ import { KthUser } from './types';
 import { IUserRequest } from './requests';
 
 /**
+ * Verify the user recaptcha response with Googles' servers
+ * 
+ * If success, calls next(), else responds with 400
+ * 
+ */
+export const verifyRecaptchaValue = async (req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> => {
+    const body = {
+        secret: configuration.RECAPTCHA_SECRET_KEY,
+        response: req.body["g-recaptcha-response"],
+    };
+
+    return axios.post(`${configuration.GOOGLE_RECAPTCHA_API_URL}?secret=${body.secret}&response=${body.response}`)
+    .then(result => {
+        if (result.data.success) return next();
+        else return errorResponse(res, StatusCodes.BAD_REQUEST, "");
+    })
+    .catch(err => {
+        console.log(err);
+        return errorResponse(res, StatusCodes.BAD_REQUEST, "");
+    });
+};
+
+/**
  * Middleware that checks if there are any validation errors, if there are, it
  * sends 400 Bad Request. Otherwise it calls the next function in the chain.
  * @param req the request object
