@@ -123,6 +123,7 @@ export const silentAuthorization = async (req: IUserRequest, res: express.Respon
     
         const plsResponse = await axios.get(`${configuration.PLS_API_URL}/user/${user.user}/jml`);
         req.user = { ...user, admin: plsResponse.data };
+        console.log(JSON.stringify(user));
     
         next();
     } catch (err) {
