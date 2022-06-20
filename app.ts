@@ -7,21 +7,10 @@ import apiRouter from './routes/api';
 // Loads env variables
 import configuration from './common/configuration';
 import prisma from './common/client';
-import rateLimit from 'express-rate-limit';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-
-const limiter = rateLimit({
-	windowMs: 60 * 1000, // 1 minute
-	max: 25, // Limit each IP to 100 requests per `window` (here, per 1 minute)
-	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
-
-// Apply the rate limiting middleware to all requests
-app.use(limiter);
 
 app.use((req, res, next) => console.log(res.getHeaders()))
 

@@ -3,6 +3,7 @@ import { body, param, check } from 'express-validator';
 import { StatusCodes } from 'http-status-codes';
 import { create, deleteCase, getAll, answer } from '../functions/api/case';
 import { authorizePls, validationCheck, verifyRecaptchaValue } from '../common/middlewares';
+import rateLimit from 'express-rate-limit';
 const router = express.Router();
 
 router.use("/create",
@@ -13,6 +14,16 @@ router.use("/create",
         next();
     }
 );
+
+const limiter = rateLimit({
+	windowMs: 60 * 1000, // 1 minute
+	max: 2, // Limit each IP to 2 requests per `window` (here, per 1 minute)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+// Apply the rate limiting middleware to case-creation requests
+router.use("/create", limiter);
 
 router.post("/create",
     verifyRecaptchaValue,
