@@ -78,30 +78,30 @@ const Home = () => {
             <Header title="Anmälan och frågor" />
             <div id="content">
                 <p>
-                    Hej! Vi heter Amanda och Ebba och är tillsammans Jämlikhetsnämndens ordförande. Vår uppgift är att se till att du känner dig trygg, inkluderad och välkommen, men framförallt att alla sektionens medlemmar behandlas lika.
+                    Hej! Jag heter Laura och är Jämlikhetsnämndens ordförande. Min uppgift är att se till att du känner dig trygg, inkluderad och välkommen, men framförallt att alla sektionens medlemmar behandlas lika.
                 </p>
                 <p>
                     Här kan du göra två saker:
                 </p>
                 <ul>
                     <li>
-                        Ställa en fråga till oss (egentligen om vad som helst, men vi kanske inte är så bra på att svara på icke-JML-frågor 😉)
+                        Ställa en fråga till mig (egentligen om vad som helst, men jag kanske inte är så bra på att svara på icke-JML-frågor 😉)
                     </li>
                     <li>
-                        Berätta om någonting som du tycker att vi behöver veta. Du kan berätta om allt ifrån en kränkande behandling du blivit utsatt för (både på och utanför KTH) till ett dåligt uppförande av en föreläsare eller problem med psykiska ohälsa. Om du tex blivit utsatt för trakasserier kan jag hjälpa dig att gå vidare med en anmälan till KTH men då går det tyvärr inte att vara anonym
+                        Berätta om någonting som du tycker att jag behöver veta. Du kan berätta om allt ifrån en kränkande behandling du blivit utsatt för (både på och utanför KTH) till ett dåligt uppförande av en föreläsare eller problem med psykiska ohälsa. Om du till exempel blivit utsatt för trakasserier kan jag hjälpa dig att gå vidare med en anmälan till KTH, men då går det tyvärr inte att vara anonym
                     </li>
                 </ul>
                 <p>
-                    Värt för dig att veta är att vi inte har officiell tystnadsplikt, men vi kommer självklart inte sprida vidare det du berättar iallafall ❤️.
+                    Värt för dig att veta är att jag inte har officiell tystnadsplikt, men jag kommer självklart inte sprida vidare det du berättar iallafall ❤️.
                 </p>
                 <p>
-                    Det går också alltid bra att rycka tag i oss om du ser oss på (eller utanför) campus!
+                    Det går också alltid bra att rycka tag i mig om du ser mig på (eller utanför) campus!
                 </p>
                 <p>
-                    Som systemet är uppbyggt nu så kommer vi inte att se din mailadress, men (om du anger det) så kommer vi se ditt namn och ditt telefonnummer. Däremot kommer systemet att skicka svaret till dig på den mailadress du uppgett (om du uppgett någon). Alla uppgifter du lämnar kommer vara kvar i systemet tills vi svarat (och sedan 7 dagar till), innan de automatiskt tas bort. Däremot kan vi komma att använda verkliga händelser som berättas om genom det här systemet (i anonymiserad och ändrad form så klart!) till cases för olika workshops (om det känns relevant).
+                    Som systemet är uppbyggt nu så kommer din mailadress inte synas, men (om du anger det) så kommer vi se ditt namn och ditt telefonnummer. Däremot kommer systemet att skicka svaret till dig på den mailadress du uppgett (om du uppgett någon). Alla uppgifter du lämnar kommer vara kvar i systemet tills vi svarat (och sedan 7 dagar till), innan de automatiskt tas bort. Däremot kan vi komma att använda verkliga händelser som berättas om genom det här systemet (i anonymiserad och ändrad form så klart!) till cases för olika workshops (om det känns relevant).
                 </p>
                 <p>
-                    Om du har några frågor till oss om formuläret eller annars så får du jättegärna maila på <a href="mailto:jamllikordf@d.kth.se">jamllikordf@d.kth.se</a> eller rycka tag i oss på annat sätt! (eller fylla i formuläret så klart 🙂)
+                    Om du har några frågor till oss om formuläret eller annars så får du jättegärna maila på <a href="mailto:jno@datasektionen.se">jno@datasektionen.se</a> eller rycka tag i mig på annat sätt! (eller fylla i formuläret så klart 🙂)
                 </p>
                 <div className="form">
                     <div className="field">
