@@ -92,7 +92,7 @@ const Home = () => {
                     </li>
                 </ul>
                 <p>
-                    Posten JNO är numera en SSO post, vilket innebär att jag har officiell tystnadsplikt. Du ska kunna känna dig trygg i att det du berätter för mig stannar mellan oss ❤️.
+                    Posten JNO är numera en SSO post, vilket innebär att jag har officiell tystnadsplikt. Du ska kunna känna dig trygg i att det du berättar för mig stannar mellan oss ❤️.
                 </p>
                 <p>
                     Det går också alltid bra att rycka tag i mig om du ser mig på (eller utanför) campus!
