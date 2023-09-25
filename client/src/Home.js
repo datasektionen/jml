@@ -88,9 +88,10 @@ const Home = () => {
 
     return (
         <>
-            <Header title="Anmälan och frågor">
-                <button onClick={toggleLanguage}>{isEnglish ? "Swedish" : "English"}</button>
-            </Header>  
+            <Header title="Anmälan och frågor" action={{
+                onClick: toggleLanguage,
+                text: isEnglish ? "Swedish" : "English"
+            }}/>
             <div id="content">
                 {isEnglish ? (
                     <>
