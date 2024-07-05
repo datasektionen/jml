@@ -95,7 +95,7 @@ const Home = () => {
                 {isEnglish ? (
                     <>
                     <p>
-                        Hi there! My name is Jennifer and I am Head of Equality, Diversity and Equal Treatment (JMLA) here at Computer Science. My purpose is to make sure that you feel safe, included and welcome, but first and foremost, to make sure that all the Chapter’s members are treated equally.
+                        Hi there! My name is Jennifer and I am Head of Equality, Diversity and Equal Treatment (JMLA) here at the Computer Science Chapter. My purpose is to make sure that you feel safe, included and welcome, but first and foremost, to make sure that all the Chapter’s members are treated equally.
                     </p>
                     <p>
                         Here, you can do two things:
