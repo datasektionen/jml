@@ -22,7 +22,7 @@ export const create = (name: string, content: string, contactMethod: string, ema
                 }
             });
 
-            const emails = configuration.NODE_ENV === "development" ? [configuration.DEVELOPMENT_ADMIN_EMAIL] : ["jamlikordf@d.kth.se"];
+            const emails = configuration.NODE_ENV === "development" ? [configuration.DEVELOPMENT_ADMIN_EMAIL] : ["jmla@datasektionen.se"];
             await sendMail(emails as any, "Nytt ärende tillagt", createdEmail);
         
             return resolve({
