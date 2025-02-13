@@ -47,7 +47,7 @@ const App = () => {
                         <Admin />
                     </Route>
                     <Route exact path="/login" render={match => {
-                        window.location = `https://login.datasektionen.se/login?callback=${encodeURIComponent(window.location.origin)}/token/`
+                        window.location = `https://sso.datasektionen.se/legacyapi/login?callback=${encodeURIComponent(window.location.origin)}/token/`
                         return <div></div>
                     }} />
                     <Route exact path="/logout" render={({ match }) => {
