@@ -1,25 +1,14 @@
 FROM node:20-alpine3.20 AS base
 
-# Install dependencies only when needed
-FROM base AS deps
+FROM base AS builder
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-COPY client/package.json client/package-lock.json ./client/
+COPY . .
 
 #RUN yarn --frozen-lockfile
 RUN npm ci
 
-# Rebuild the source code only when needed
-FROM base AS builder
-
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/client/node_modules ./client/node_modules
-COPY . .
-
-RUN npm run postinstall
 RUN npm run build
 
 # Production image; runtime
@@ -36,7 +25,7 @@ COPY package.json package-lock.json .npmrc ./
 COPY prisma/ ./prisma/
 RUN chown -R www:www ./
 
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 EXPOSE 8080
 
