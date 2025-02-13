@@ -1,6 +1,8 @@
-FROM node:20-alpine3.20 AS base
+FROM node:12-alpine AS base
 
 FROM base AS builder
+
+RUN apk add --no-cache git # for npm fetching Methone from GitHub
 
 WORKDIR /app
 
