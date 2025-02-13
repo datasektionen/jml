@@ -15,7 +15,6 @@ See [configuration.ts](server/common/configuration.ts)
 | GOOGLE_RECAPTCHA_API_URL  | https://www.google.com/recaptcha/api/siteverify | URL to reCAPTCHA API                                |
 | RECAPTCHA_SECRET_KEY       | -                                        | Use this secret key for communication between your site and reCAPTCHA |
 | REACT_APP_RECAPTCHA_PUBLIC_KEY | -                                    | Use this site key in the HTML code your site serves to users |
-| NODE_OPTIONS              | --openssl-legacy-provider                 | Necessary for more recent versions of NodeJS; might already be in place via .npmrc |
 
 ## reCAPTCHA
 This app uses reCAPTCHA v2

@@ -5,7 +5,7 @@
     "url": "https://github.com/datasektionen/jml"
   },
   "engines": {
-    "node": "=20.18"
+    "node": "=12.20.0"
   },
   "scripts": {
     "postinstall": "cd client && npm install",
