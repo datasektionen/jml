@@ -95,7 +95,10 @@ const Home = () => {
                 {isEnglish ? (
                     <>
                     <p>
-                        Hi there! My name is Jennifer and I am Head of Equality, Diversity and Equal Treatment (JMLA) here at the Computer Science Chapter. My purpose is to make sure that you feel safe, included and welcome, but first and foremost, to make sure that all the Chapter’s members are treated equally.
+                        Hi there! My name is Johanna and I am Head of Equality, Diversity and Equal Treatment (JMLA) here at the Computer Science Chapter.
+                    </p>
+                    <p>
+                        My purpose is to make sure that you feel safe, included and welcome, but first and foremost, to make sure that all the Chapter’s members are treated equally.
                     </p>
                     <p>
                         Here, you can do two things:
@@ -109,7 +112,7 @@ const Home = () => {
                         </li>
                     </ul>
                     <p>
-                        The position of JMLA is an SSO position, which means that I have official confidentiality, which means that what you tell me can always stay between just us ❤️.
+                        The position of JMLA is an SSO position (student safety representative), which means that I have official duty of confidentiality, so what you tell me will always stay between just us ❤️.
                     </p>
                     <p>
                         It's always okay to approach me if you see me on (or off) campus!
@@ -118,7 +121,7 @@ const Home = () => {
                         As the system is currently set up, your email address will not be visible, but (if you provide it) I will be able to see your name and phone number. However, the system will send my response to you at the email address you provided (if you provided one). All information you provide will be retained in the system until I respond (and then for an additional 7 days) before being automatically deleted. However, I may use real events reported through this system (in anonymized and modified form, of course!) for various workshop cases (if it seems relevant).
                     </p>
                     <p>
-                        If you have any questions for me about the form or anything else, please feel free to email me at <a href="mailto:jmla@datasektionen.se">jmla@datasektionen.se</a> or reach out to me in another way! (or fill out the form, of course 🙂)
+                        If you have any questions for me about the form or anything else, please feel free to email me at <a href="mailto:jmla@datasektionen.se">jmla@datasektionen.se</a> or reach out to me in another way! (or fill out the form, of course 🙂).
                     </p>
 
                     <div className="form">
@@ -197,9 +200,11 @@ const Home = () => {
                     </>
                 ) :  (
                 <>
-
-                    <p>
-                    Hej! Jag heter Jennifer och är Jämlikhets-, Mångfalds- och Likabehandlingsansvarig (JMLA) här på Datasektionen. Min uppgift är att se till att du känner dig trygg, inkluderad och välkommen, men framförallt att alla sektionens medlemmar behandlas lika.
+                <p>
+                    Hej! Jag heter Johanna och är Jämlikhets-, Mångfalds- och Likabehandlingsansvarig (JMLA) här på Datasektionen.
+                </p>
+                <p>
+                    Min uppgift är att se till att du känner dig trygg, inkluderad och välkommen, men framförallt att alla sektionens medlemmar behandlas lika.
                 </p>
                 <p>
                     Här kan du göra två saker:
@@ -209,11 +214,11 @@ const Home = () => {
                         Ställa en fråga till mig (egentligen om vad som helst, men jag kanske inte är så bra på att svara på icke-JML-frågor 😉)
                     </li>
                     <li>
-                        Berätta om någonting som du tycker att jag behöver veta. Du kan berätta om allt ifrån en kränkande behandling du blivit utsatt för (både på och utanför KTH) till ett dåligt uppförande av en föreläsare eller problem med psykiska ohälsa. Om du till exempel blivit utsatt för trakasserier och vill gå vidare med en anmälan till KTH så kan jag hjälpa dig, men det kan vara bra att veta att det tyvärr då inte går att vara anonym.
+                        Berätta om någonting som du tycker att jag behöver veta. Allt ifrån en kränkande behandling du blivit utsatt för (både på och utanför KTH), dåligt uppförande av en föreläsare eller problem med psykiska ohälsa. Om du till exempel blivit utsatt för trakasserier och vill gå vidare med en anmälan till KTH så kan jag hjälpa dig, men det kan vara bra att veta att det tyvärr då inte går att vara anonym.
                     </li>
                 </ul>
                 <p>
-                    Posten JMLA är en SSO post, vilket innebär att jag har officiell tystnadsplikt. Detta innebär att det du delar med mig kan alltid stanna mellan oss ❤️.
+                    Posten JMLA är en SSO (studerande skyddsombud) post, vilket innebär att jag har officiell tystnadsplikt. Detta innebär att det du delar med mig kan alltid stanna mellan oss ❤️.
                 </p>
                 <p>
                     Det går också alltid bra att rycka tag i mig om du ser mig på (eller utanför) campus!
@@ -222,7 +227,7 @@ const Home = () => {
                     Som systemet är uppbyggt nu så kommer din mailadress inte synas, men (om du anger det) så kommer jag att kunna se ditt namn och ditt telefonnummer. Däremot kommer systemet att skicka svaret till dig på den mailadress du uppgett (om du uppgett någon). Alla uppgifter du lämnar kommer vara kvar i systemet tills jag svarat (och sedan 7 dagar till), innan de automatiskt tas bort. Däremot kan jag komma att använda verkliga händelser som berättas om genom det här systemet (i anonymiserad och ändrad form så klart!) till cases för olika workshops (om det känns relevant).
                 </p>
                 <p>
-                    Om du har några frågor till mig om formuläret eller vad som helst annat så får du jättegärna maila på <a href="mailto:jmla@datasektionen.se">jmla@datasektionen.se</a> eller rycka tag i mig på annat sätt! (eller fylla i formuläret så klart 🙂)
+                    Om du har några frågor till mig om formuläret eller vad som helst annat så får du jättegärna maila på <a href="mailto:jmla@datasektionen.se">jmla@datasektionen.se</a> eller rycka tag i mig på annat sätt! (eller fylla i formuläret så klart 🙂).
                 </p>
                 
                 <div className="form">
