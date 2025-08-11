@@ -13,12 +13,8 @@ job "jml" {
       provider = "nomad"
       tags = [
         "traefik.enable=true",
-        "traefik.http.routers.jml.rule=HostRegexp(`(anmal|jml)\\.datasektionen\\.se`)",
+        "traefik.http.routers.jml.rule=Host(`anmal.datasektionen.se`)",
         "traefik.http.routers.jml.tls.certresolver=default",
-        "traefik.http.routers.jml.middlewares=redirect-new,default@file",
-        "traefik.http.middlewares.redirect-new.redirectregex.regex=^https?://jml\\.datasektionen\\.se/(.*)",
-        "traefik.http.middlewares.redirect-new.redirectregex.replacement=https://anmal\\.datasektionen\\.se/$${1}",
-        "traefik.http.middlewares.redirect-new.redirectregex.permanent=true",
       ]
     }
 
