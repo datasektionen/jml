@@ -65,7 +65,7 @@ router.get("/all",
             .catch(err => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(err));
     });
 
-// Answer via email and delete case from database.
+// Answer via email
 router.post("/answer/:id",
     authorizePls,
     param("id").isInt(),

@@ -98,18 +98,8 @@ export const answer = (id: number, content: string, original: string, user: KthU
                 const status = await sendMail([object.email], "Din fråga är besvarad", answerEmail.replace("{MEDDELANDE}", content).replace("{USER}", `${user?.first_name} ${user?.last_name} (${user?.user})`).replace("{ORIGINAL}", original));
 
                 if (status) {
-
-                    await prisma.case.update({
-                        where: {
-                            id
-                        },
-                        data: {
-                            delete: new Date(Date.now() + 3600*24*7*1000)
-                        }
-                    });
-        
                     return resolve({
-                        body: "Mejlet skickades och ärendet togs bort."
+                        body: "Mejlet skickades."
                     });
                 } else {
                     if (configuration.NODE_ENV === "testing") return true;
