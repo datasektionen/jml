@@ -10,7 +10,8 @@ if (!process.env.LOGIN_API_KEY && process.env.NODE_ENV !== "testing") {
 const configuration = {
     PORT: process.env.PORT ?? 8080,
     NODE_ENV: process.env.NODE_ENV ?? "production",
-    PLS_API_URL: process.env.PLS_API_URL ?? "https://pls.datasektionen.se/api",
+    HIVE_API_URL: process.env.HIVE_API_URL ?? "https://hive.datasektionen.se/api/v1",
+    HIVE_API_KEY: process.env.HIVE_API_KEY,
     LOGIN_API_URL: process.env.LOGIN_API_URL ?? "https://login.datasektionen.se",
     LOGIN_API_KEY: process.env.LOGIN_API_KEY,
     SPAM_API_URL: process.env.SPAM_API_URL ?? "https://spam.datasektionen.se/api",

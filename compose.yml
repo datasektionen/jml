@@ -1,0 +1,83 @@
+services:
+  anmal:
+    build:
+      context: .
+      args:
+        REACT_APP_RECAPTCHA_PUBLIC_KEY: 
+        REACT_APP_LOGIN_API_URL: http://localhost:7002
+    ports:
+      - 8000:8000
+    environment:
+      PORT: 8000
+      DATABASE_URL: postgres://jml:jml@db:5432/jml
+      LOGIN_API_KEY: aaaa
+      HIVE_API_KEY: aaaa
+      SPAM_API_KEY: aaaa
+      RECAPTCHA_SECRET_KEY: 
+      HIVE_API_URL: http://nyckeln:7004/api/v1
+      LOGIN_API_URL: http://nyckeln:7002
+      SPAM_API_URL: https://spam.datasektionen.se/api
+      GOOGLE_RECAPTCHA_API_URL: https://www.google.com/recaptcha/api/siteverify
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_PASSWORD=jml
+      - POSTGRES_USER=jml
+      - POSTGRES_DB=jml
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "sh -c 'pg_isready -d jml -U jml'"
+      interval: 1s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+  nyckeln:
+    image: ghcr.io/datasektionen/nyckeln-under-dorrmattan:latest
+    configs:
+      - source: nyckeln.yaml
+        target: /config.yaml
+    ports:
+      - 7001:7001
+      - 7002:7002
+      - 7003:7003
+      - 7004:7004
+
+configs:
+  nyckeln.yaml:
+    content: |
+      clients:
+        - id: "client-id" # use this in your oidc client
+          secret: "client-secret" # use this in your oidc client
+          redirect_uris: # URIs of your oidc client
+            [
+              "http://localhost:4000/oidcc/callback",
+              "http://localhost:4000/oidcc/authorize",
+            ]
+
+      users:
+        - ug_kth_id: some-id
+          kth_id: turetek
+          email: turetek@kth.se
+          first_name: Ture
+          family_name: Teknolog
+          year_tag: D-00
+          hive_tags:
+            - id: personal_email
+              content: turetek@gmail.com
+
+      hive:
+        groups:
+          - name: Jämlikhets-, Mångfalds- och Likabehandlingsansvarig
+            id: jmla
+            domain: example.com
+            members:
+              - turetek
+            tags:
+              - id: mandate
+            permissions:
+              - id: admin
+                scope: null

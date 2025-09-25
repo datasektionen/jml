@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Header } from 'methone';
-import { url } from './App';
 import ReCAPTCHA from "react-google-recaptcha";
 
 const Home = () => {
@@ -70,7 +69,7 @@ const Home = () => {
         if (select === "phone") body["phone"] = phone
         if (name.length !== 0) body["name"] = name
 
-        axios.post(url("/api/case/create"), {
+        axios.post("/api/case/create", {
             ...body,
             "g-recaptcha-response": recaptchaValue,
         })

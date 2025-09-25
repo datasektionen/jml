@@ -20,14 +20,13 @@ export const verifyRecaptchaValue = async (req: express.Request, res: express.Re
     };
 
     return axios.post(`${configuration.GOOGLE_RECAPTCHA_API_URL}?secret=${body.secret}&response=${body.response}`)
-    .then(result => {
-        if (result.data.success) return next();
-        else return errorResponse(res, StatusCodes.BAD_REQUEST, "");
-    })
-    .catch(err => {
-        console.log(err);
-        return errorResponse(res, StatusCodes.BAD_REQUEST, "");
-    });
+        .then(result => {
+            if (result.data.success) return next();
+            else return errorResponse(res, StatusCodes.BAD_REQUEST, "");
+        })
+        .catch(err => {
+            return errorResponse(res, StatusCodes.BAD_REQUEST, "");
+        });
 };
 
 /**
@@ -46,8 +45,8 @@ export const validationCheck = (req: express.Request, res: express.Response, nex
     next();
 };
 
-// Authorizes token against pls.
-export const authorizePls = (req: express.Request, res: express.Response, next: express.NextFunction): void => {
+// Authorizes token against hive.
+export const authorizeHive = (req: express.Request, res: express.Response, next: express.NextFunction): void => {
     const authorizationHeader = req.headers.authorization;
     // Get token from "Bearer token"
     const token = authorizationHeader && authorizationHeader.split(" ")[1];
@@ -61,39 +60,43 @@ export const authorizePls = (req: express.Request, res: express.Response, next: 
         unauthorizedResponse(res);
         return;
     }
-    
+
     axios.get(`${configuration.LOGIN_API_URL}/verify/${token}.json?api_key=${configuration.LOGIN_API_KEY}`)
-    .then(response => {
-        if (response.status !== 200) {
-            unauthorizedResponse(res);
-            return;
-        }
-
-        const user = response.data as KthUser;
-
-        axios.get(`${configuration.PLS_API_URL}/user/${user.user}/jml`)
-        .then(r => {
-
-            if (!r.data.includes("admin")) {
+        .then(response => {
+            if (response.status !== 200) {
                 unauthorizedResponse(res);
                 return;
             }
 
-            req.user = { ...response.data, admin: true } as KthUser;
+            const user = response.data as KthUser;
 
-            console.log(`User ${user.first_name} ${user.last_name} (${user.emails}) authenticated.`);
+            const config = {
+                headers: { Authorization: `Bearer ${configuration.HIVE_API_KEY}` }
+            };
 
-            next();
+            axios.get(`${configuration.HIVE_API_URL}/user/${user.user}/permission/admin`, config)
+                .then(r => {
+
+                    if (!r.data) {
+                        unauthorizedResponse(res);
+                        return;
+                    }
+
+                    req.user = { ...response.data, admin: true } as KthUser;
+
+                    console.log(`User ${user.first_name} ${user.last_name} (${user.emails}) authenticated.`);
+
+                    next();
+                })
+                .catch(err => {
+                    unauthorizedResponse(res);
+                    return;
+                });
         })
         .catch(err => {
             unauthorizedResponse(res);
             return;
-        }); 
-    })
-    .catch(err => {
-        unauthorizedResponse(res);
-        return;
-    });
+        });
 };
 
 // Checks authorization but does not reject.
@@ -118,13 +121,17 @@ export const silentAuthorization = async (req: IUserRequest, res: express.Respon
             next();
             return;
         }
-        
+
         const user = response.data;
-    
-        const plsResponse = await axios.get(`${configuration.PLS_API_URL}/user/${user.user}/jml`);
-        req.user = { ...user, admin: plsResponse.data };
+
+        const config = {
+            headers: { Authorization: `Bearer ${configuration.HIVE_API_KEY}` }
+        };
+
+        const hiveResponse = await axios.get(`${configuration.HIVE_API_URL}/user/${user.user}/permission/admin`, config);
+        req.user = { ...user, admin: hiveResponse.data };
         console.log(JSON.stringify(user));
-    
+
         next();
     } catch (err) {
         next();

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { url } from './App';
 
 const Answer = ({ item, killMe, loading: disabled }) => {
 
@@ -10,7 +9,7 @@ const Answer = ({ item, killMe, loading: disabled }) => {
 
     const submit = (id, body) => {
         setLoading(true)
-        axios.post(url(`/api/case/answer/${id}`), body, {
+        axios.post(`/api/case/answer/${id}`, body, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }

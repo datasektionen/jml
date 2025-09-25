@@ -13,7 +13,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use((req, res, next) => {
-    console.log(res.getHeaders());
     next();
 })
 

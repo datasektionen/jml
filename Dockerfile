@@ -11,6 +11,11 @@ COPY . .
 #RUN yarn --frozen-lockfile
 RUN npm ci
 
+ARG REACT_APP_RECAPTCHA_PUBLIC_KEY
+ENV REACT_APP_RECAPTCHA_PUBLIC_KEY=$REACT_APP_RECAPTCHA_PUBLIC_KEY
+ARG REACT_APP_LOGIN_API_URL=https://sso.datasektionen.se/legacyapi
+ENV REACT_APP_LOGIN_API_URL=$REACT_APP_LOGIN_API_URL
+
 RUN npm run build
 
 # Production image; runtime
@@ -26,8 +31,6 @@ COPY --from=builder /app/client/build ./client/build
 COPY package.json package-lock.json .npmrc ./
 COPY prisma/ ./prisma/
 RUN chown -R www:www ./
-
-ENV NODE_ENV=production
 
 EXPOSE 8080
 

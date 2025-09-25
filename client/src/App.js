@@ -7,7 +7,6 @@ import useAuthorization from './useAuthorization';
 
 import './App.css'
 
-export const url = (path) => process.env.REACT_APP_BASE_URL + path
 export const AdminContext = React.createContext({ loading: true, admin: [] })
 
 const defaultLinks = [
@@ -47,7 +46,7 @@ const App = () => {
                         <Admin />
                     </Route>
                     <Route exact path="/login" render={match => {
-                        window.location = `https://sso.datasektionen.se/legacyapi/login?callback=${encodeURIComponent(window.location.origin)}/token/`
+                        window.location = `${process.env.REACT_APP_LOGIN_API_URL}/login?callback=${encodeURIComponent(window.location.origin)}/token/`
                         return <div></div>
                     }} />
                     <Route exact path="/logout" render={({ match }) => {
