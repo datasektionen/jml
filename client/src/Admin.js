@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Header } from 'methone';
-import { url } from './App';
 import Moment from 'react-moment';
 import Answer from './Answer';
 import { AdminContext } from './App'
@@ -13,7 +12,7 @@ const Admin = () => {
     const [items, setItems] = useState([]);
 
     const fetchAll = () => {
-        axios.get(url("/api/case/all"), {
+        axios.get("/api/case/all", {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
@@ -44,7 +43,7 @@ const Admin = () => {
     const deleteItem = (id) => {
         if (loading) return
         setLoading(true)
-        axios.delete(url(`/api/case/${id}`), {
+        axios.delete(`/api/case/${id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
