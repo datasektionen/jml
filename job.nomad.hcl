@@ -40,7 +40,7 @@ RECAPTCHA_SECRET_KEY={{ .recaptcha_secret_key }}
 NODE_ENV=production
 HIVE_API_URL=http://hive.nomad.dsekt.internal/api/v1
 LOGIN_API_URL=http://sso.nomad.dsekt.internal/legacyapi
-SPAM_API_URL=https://spam.datasektionen.se/api
+SPAM_API_URL=https://spam.datasektionen.se/legacy/api
 GOOGLE_RECAPTCHA_API_URL=https://www.google.com/recaptcha/api/siteverify
 ENV
         destination = "local/.env"
