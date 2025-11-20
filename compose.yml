@@ -99,6 +99,8 @@ configs:
         listen       8000;
         server_name  localhost;
 
+        access_log  /dev/null  main;
+
         location /api {
           proxy_pass http://anmal:8001/api;
         }
