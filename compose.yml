@@ -1,19 +1,24 @@
 services:
+  reverseproxybecauseimlazy:
+    image: nginx
+    ports:
+      - 8000:8000
+    configs:
+      - source: nginx.conf
+        target: /etc/nginx/conf.d/default.conf
   anmal:
     build:
       context: .
       args:
-        REACT_APP_RECAPTCHA_PUBLIC_KEY: 
+        REACT_APP_RECAPTCHA_PUBLIC_KEY: bingus
         REACT_APP_LOGIN_API_URL: http://localhost:7002
-    ports:
-      - 8000:8000
+      target: dev
     environment:
-      PORT: 8000
       DATABASE_URL: postgres://jml:jml@db:5432/jml
       LOGIN_API_KEY: aaaa
       HIVE_API_KEY: aaaa
       SPAM_API_KEY: aaaa
-      RECAPTCHA_SECRET_KEY: 
+      RECAPTCHA_SECRET_KEY: yeet
       HIVE_API_URL: http://nyckeln:7004/api/v1
       LOGIN_API_URL: http://nyckeln:7002
       SPAM_API_URL: https://spam.datasektionen.se/api
@@ -21,6 +26,13 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+        - action: rebuild
+          path: package.json
   db:
     image: postgres:16-alpine
     environment:
@@ -81,3 +93,17 @@ configs:
             permissions:
               - id: admin
                 scope: null
+  nginx.conf:
+    content: |
+      server {
+        listen       8000;
+        server_name  localhost;
+
+        location /api {
+          proxy_pass http://anmal:8001/api;
+        }
+
+        location / {
+          proxy_pass http://anmal:8002;
+        }
+      }

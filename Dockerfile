@@ -16,10 +16,16 @@ ENV REACT_APP_RECAPTCHA_PUBLIC_KEY=$REACT_APP_RECAPTCHA_PUBLIC_KEY
 ARG REACT_APP_LOGIN_API_URL=https://sso.datasektionen.se/legacyapi
 ENV REACT_APP_LOGIN_API_URL=$REACT_APP_LOGIN_API_URL
 
+FROM builder AS build
+
 RUN npm run build
 
+FROM builder AS dev
+
+CMD ["sh", "-c", "(npm run prestart && PORT=8001 npm run dev) & (cd client && PORT=8002 npm start)"]
+
 # Production image; runtime
-FROM base AS runner
+FROM build AS runner
 
 RUN addgroup --system --gid 1001 www
 RUN adduser --no-create-home --system --uid 1001 --ingroup www www
@@ -36,4 +42,4 @@ EXPOSE 8080
 
 USER www:www
 
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/app.js"]
+CMD ["npm", "start"]
