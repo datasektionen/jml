@@ -4,15 +4,9 @@ import { StatusCodes } from 'http-status-codes';
 import { errorResponse, unauthorizedResponse } from './ApiResponse';
 import configuration from './configuration';
 import axios from 'axios';
-import { KthUser } from './types';
+import { OidcUser, Permission } from './types';
 import { IUserRequest } from './requests';
 
-/**
- * Verify the user recaptcha response with Googles' servers
- * 
- * If success, calls next(), else responds with 400
- * 
- */
 export const verifyRecaptchaValue = async (req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> => {
     const body = {
         secret: configuration.RECAPTCHA_SECRET_KEY,
@@ -20,11 +14,11 @@ export const verifyRecaptchaValue = async (req: express.Request, res: express.Re
     };
 
     return axios.post(`${configuration.GOOGLE_RECAPTCHA_API_URL}?secret=${body.secret}&response=${body.response}`)
-        .then(result => {
+        .then((result: any) => {
             if (result.data.success) return next();
             else return errorResponse(res, StatusCodes.BAD_REQUEST, "");
         })
-        .catch(err => {
+        .catch((err: any) => {
             return errorResponse(res, StatusCodes.BAD_REQUEST, "");
         });
 };
@@ -45,92 +39,56 @@ export const validationCheck = (req: express.Request, res: express.Response, nex
     next();
 };
 
-// Authorizes token against hive.
-export const authorizeHive = (req: express.Request, res: express.Response, next: express.NextFunction): void => {
-    const authorizationHeader = req.headers.authorization;
-    // Get token from "Bearer token"
-    const token = authorizationHeader && authorizationHeader.split(" ")[1];
-    if (!token || token.length === 0) {
+export const authorizeOidc = (req: express.Request, res: express.Response, next: express.NextFunction): void => {
+    const oidc = (req as any).oidc;
+
+    if (!oidc || !oidc.isAuthenticated()) {
         unauthorizedResponse(res);
         return;
     }
 
-    if (configuration.NODE_ENV === "testing") {
-        if (token === "admin") return next();
+    const user = oidc.user as OidcUser;
+
+    if (!user) {
         unauthorizedResponse(res);
         return;
     }
 
-    axios.get(`${configuration.LOGIN_API_URL}/verify/${token}.json?api_key=${configuration.LOGIN_API_KEY}`)
-        .then(response => {
-            if (response.status !== 200) {
-                unauthorizedResponse(res);
-                return;
-            }
+    const permissions = user.permissions || [];
+    const isAdmin = permissions.some((p: Permission) => p.id === "admin");
 
-            const user = response.data as KthUser;
+    if (!isAdmin) {
+        unauthorizedResponse(res);
+        return;
+    }
 
-            const config = {
-                headers: { Authorization: `Bearer ${configuration.HIVE_API_KEY}` }
-            };
+    req.user = { ...user, isAdmin };
+    console.log(`User ${user.name || user.email} authenticated with admin permissions.`);
 
-            axios.get(`${configuration.HIVE_API_URL}/user/${user.user}/permission/admin`, config)
-                .then(r => {
-
-                    if (!r.data) {
-                        unauthorizedResponse(res);
-                        return;
-                    }
-
-                    req.user = { ...response.data, admin: true } as KthUser;
-
-                    console.log(`User ${user.first_name} ${user.last_name} (${user.emails}) authenticated.`);
-
-                    next();
-                })
-                .catch(err => {
-                    unauthorizedResponse(res);
-                    return;
-                });
-        })
-        .catch(err => {
-            unauthorizedResponse(res);
-            return;
-        });
+    next();
 };
 
-// Checks authorization but does not reject.
-// Takes token either in Authorization header or as a query string
 export const silentAuthorization = async (req: IUserRequest, res: express.Response, next: express.NextFunction): Promise<void> => {
-    const authorizationHeader = req.headers.authorization;
-    let token;
-    if (authorizationHeader) {
-        token = authorizationHeader.split(" ")[1];
-    } else if (req.query.token) {
-        token = req.query.token;
-    }
-
-    if (!token || token.length === 0) {
-        next();
-        return;
-    }
-
     try {
-        const response = await axios.get(`${configuration.LOGIN_API_URL}/verify/${token}.json?api_key=${configuration.LOGIN_API_KEY}`);
-        if (response.status !== StatusCodes.OK) {
+        const oidc = (req as any).oidc;
+
+        if (!oidc || !oidc.isAuthenticated()) {
             next();
             return;
         }
 
-        const user = response.data;
+        const user = oidc.user as OidcUser;
 
-        const config = {
-            headers: { Authorization: `Bearer ${configuration.HIVE_API_KEY}` }
-        };
+        if (!user) {
+            next();
+            return;
+        }
 
-        const hiveResponse = await axios.get(`${configuration.HIVE_API_URL}/user/${user.user}/permission/admin`, config);
-        req.user = { ...user, admin: hiveResponse.data };
-        console.log(JSON.stringify(user));
+        const permissions = user.permissions || [];
+        const isAdmin = permissions.some((p: Permission) => p.id === "admin");
+
+        req.user = { ...user, isAdmin };
+        console.log(JSON.stringify({ sub: user.sub, email: user.email, isAdmin }));
 
         next();
     } catch (err) {

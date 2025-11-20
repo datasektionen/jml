@@ -2,22 +2,37 @@ import dotenv from 'dotenv';
 // Read from the .env-file
 dotenv.config();
 
-if (!process.env.LOGIN_API_KEY && process.env.NODE_ENV !== "testing") {
-    console.log("No LOGIN_API_KEY set. Exiting...");
+if (!process.env.OIDC_CLIENT_ID && process.env.NODE_ENV !== "testing") {
+    console.log("No OIDC_CLIENT_ID set. Exiting...");
+    process.exit(-1);
+}
+
+if (!process.env.OIDC_CLIENT_SECRET && process.env.NODE_ENV !== "testing") {
+    console.log("No OIDC_CLIENT_SECRET set. Exiting...");
+    process.exit(-1);
+}
+
+if (!process.env.OIDC_ISSUER_BASE_URL && process.env.NODE_ENV !== "testing") {
+    console.log("No OIDC_ISSUER_BASE_URL set. Exiting...");
+    process.exit(-1);
+}
+
+if (!process.env.SESSION_SECRET && process.env.NODE_ENV !== "testing") {
+    console.log("No SESSION_SECRET set. Exiting...");
     process.exit(-1);
 }
 
 const configuration = {
     PORT: process.env.PORT ?? 8080,
     NODE_ENV: process.env.NODE_ENV ?? "production",
-    HIVE_API_URL: process.env.HIVE_API_URL ?? "https://hive.datasektionen.se/api/v1",
-    HIVE_API_KEY: process.env.HIVE_API_KEY,
-    LOGIN_API_URL: process.env.LOGIN_API_URL ?? "https://login.datasektionen.se",
-    LOGIN_API_KEY: process.env.LOGIN_API_KEY,
+    OIDC_CLIENT_ID: process.env.OIDC_CLIENT_ID,
+    OIDC_CLIENT_SECRET: process.env.OIDC_CLIENT_SECRET,
+    OIDC_ISSUER_BASE_URL: process.env.OIDC_ISSUER_BASE_URL,
+    OIDC_BASE_URL: process.env.OIDC_BASE_URL ?? `http://localhost:${process.env.PORT ?? 8080}`,
+    SESSION_SECRET: process.env.SESSION_SECRET,
     SPAM_API_URL: process.env.SPAM_API_URL ?? "https://spam.datasektionen.se/api",
     SPAM_API_KEY: process.env.SPAM_API_KEY,
     SEND_MAIL_IN_DEVELOPMENT: Boolean(process.env.SEND_MAIL_IN_DEVELOPMENT ?? false),
-    // What user to send emails to in development
     DEVELOPMENT_ADMIN_EMAIL: process.env.DEVELOPMENT_ADMIN_EMAIL,
     RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY,
     GOOGLE_RECAPTCHA_API_URL: process.env.GOOGLE_RECAPTCHA_API_URL ?? "https://www.google.com/recaptcha/api/siteverify",

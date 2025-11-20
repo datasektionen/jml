@@ -1,3 +1,17 @@
+export interface Permission {
+    id: string;
+}
+
+export interface OidcUser {
+    sub: string;
+    email?: string;
+    name?: string;
+    given_name?: string;
+    family_name?: string;
+    permissions?: Permission[];
+    isAdmin?: boolean;
+}
+
 export interface KthUser {
     emails: string;
     first_name: string;
@@ -6,11 +20,10 @@ export interface KthUser {
     user: string;
 }
 
-
 declare global {
     namespace Express {
       interface Request {
-        user?: KthUser
+        user?: OidcUser;
       }
     }
 }

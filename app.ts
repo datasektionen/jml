@@ -2,15 +2,46 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import path from "path";
+import session from 'express-session';
+import { auth } from 'express-openid-connect';
 
 import apiRouter from './routes/api';
-// Loads env variables
 import configuration from './common/configuration';
 import prisma from './common/client';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+app.use(session({
+    secret: configuration.SESSION_SECRET!,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: configuration.NODE_ENV === "production",
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000
+    }
+}));
+
+app.use(auth({
+    authRequired: false,
+    auth0Logout: true,
+    baseURL: configuration.OIDC_BASE_URL,
+    clientID: configuration.OIDC_CLIENT_ID!,
+    clientSecret: configuration.OIDC_CLIENT_SECRET!,
+    issuerBaseURL: configuration.OIDC_ISSUER_BASE_URL!,
+    secret: configuration.SESSION_SECRET!,
+    routes: {
+        login: "/api/login",
+        callback: "/api/callback",
+        logout: "/api/logout",
+    },
+    authorizationParams: {
+        response_type: 'code',
+        scope: 'openid profile email permissions',
+    },
+}));
 
 app.use((req, res, next) => {
     next();

@@ -22,7 +22,9 @@ RUN npm run build
 
 FROM builder AS dev
 
-CMD ["sh", "-c", "(npm run prestart && PORT=8001 npm run dev) & (cd client && PORT=8002 npm start)"]
+RUN apk add --no-cache socat
+
+CMD ["sh", "-c", "(npm run prestart && PORT=8001 npm run dev) & (cd client && PORT=8002 npm start) & (socat TCP-LISTEN:7003,fork TCP:nyckeln:7003)"]
 
 # Production image; runtime
 FROM build AS runner
