@@ -134,6 +134,7 @@ export const silentAuthorization = async (req: IUserRequest, res: express.Respon
 
         next();
     } catch (err) {
+        console.error("silentAuthorization:", err);
         next();
     }
 };
