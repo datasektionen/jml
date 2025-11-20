@@ -2,7 +2,7 @@ import express from 'express';
 import { body, param, check } from 'express-validator';
 import { StatusCodes } from 'http-status-codes';
 import { create, deleteCase, getAll, answer } from '../functions/api/case';
-import { authorizeHive, validationCheck, verifyRecaptchaValue } from '../common/middlewares';
+import { authorizeOidc, validationCheck, verifyRecaptchaValue } from '../common/middlewares';
 import rateLimit from 'express-rate-limit';
 const router = express.Router();
 
@@ -58,16 +58,15 @@ router.post("/create",
     });
 
 router.get("/all",
-    authorizeHive,
+    authorizeOidc,
     async (req, res) => {
         getAll()
             .then(result => res.status(StatusCodes.OK).json(result))
             .catch(err => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(err));
     });
 
-// Answer via email and delete case from database.
 router.post("/answer/:id",
-    authorizeHive,
+    authorizeOidc,
     param("id").isInt(),
     body("content").trim().isString(),
     body("original").trim().isString(),
@@ -81,9 +80,8 @@ router.post("/answer/:id",
             .catch(err => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(err));
     });
 
-// Delete case
 router.delete("/:id",
-    authorizeHive,
+    authorizeOidc,
     param("id").isInt(),
     validationCheck,
     async (req, res) => {

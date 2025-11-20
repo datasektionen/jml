@@ -34,7 +34,7 @@ const App = () => {
                         system_name: 'jml',
                         color_scheme: 'cerise',
                         links: methoneLinks,
-                        login_href: hasToken ? '/logout' : '/login',
+                        login_href: hasToken ? '/api/logout' : '/api/login',
                         login_text: hasToken ? 'Logga ut' : 'Logga in',
                     }}
                 />
@@ -45,19 +45,6 @@ const App = () => {
                     <Route exact path="/admin">
                         <Admin />
                     </Route>
-                    <Route exact path="/login" render={match => {
-                        window.location = `${process.env.REACT_APP_LOGIN_API_URL}/login?callback=${encodeURIComponent(window.location.origin)}/token/`
-                        return <div></div>
-                    }} />
-                    <Route exact path="/logout" render={({ match }) => {
-                        localStorage.removeItem("token")
-                        window.location = "/"
-                        return <div></div>
-                    }} />
-                    <Route exact path="/token/:token" render={({ match }) => {
-                        localStorage.setItem("token", match.params.token)
-                        return <Redirect to="/" />
-                    }} />
                     {/* 404, redirect to home */}
                     <Route>
                         <Redirect to="/" />

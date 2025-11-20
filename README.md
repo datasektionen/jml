@@ -5,8 +5,6 @@ See [configuration.ts](server/common/configuration.ts)
 | --------------------------------- | ------------------------------------------------- | --------------------------------------------------------------------- |
 | PORT                              | 8080                                              | Server port                                                           |
 | NODE_ENV                          | production                                        |                                                                       |
-| HIVE_API_URL                      | https://hive.datasektionen.se/api/v1              | URL to hive api                                                       |
-| HIVE_API_KEY                      | -                                                 | Hive key                                                              |
 | LOGIN_API_URL                     | https://login.datasektionen.se                    | URL to login                                                          |
 | LOGIN_API_KEY                     | -                                                 | Login key                                                             |
 | SPAM_API_URL                      | https://spam.datasektionen.se/legacy/api          | URL to spam                                                           |
