@@ -14,7 +14,6 @@ jobs:
         with:
           build-vars: |
             REACT_APP_RECAPTCHA_PUBLIC_KEY=6Lc7T6IrAAAAAJ2f5PK3vBm19HcvVRNESlZm46Y2
-            REACT_APP_LOGIN_API_URL: https://sso.datasektionen.se/legacyapi
 
           github-token: ${{ secrets.GITHUB_TOKEN }}
           nomad-token: ${{ secrets.NOMAD_TOKEN }}
