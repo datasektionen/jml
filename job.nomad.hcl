@@ -13,8 +13,8 @@ job "jml-dev" {
       provider = "nomad"
       tags = [
         "traefik.enable=true",
-        "traefik.http.routers.jml.rule=Host(`anmal.betasektionen.se`)",
-        "traefik.http.routers.jml.tls.certresolver=default",
+        "traefik.http.routers.jml-dev.rule=Host(`anmal.betasektionen.se`)",
+        "traefik.http.routers.jml-dev.tls.certresolver=default",
       ]
     }
 
