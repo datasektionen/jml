@@ -1,8 +1,8 @@
-job "jml" {
+job "jml-dev" {
   type      = "service"
   namespace = "jml"
 
-  group "jml" {
+  group "jml-dev" {
     network {
       port "http" { }
     }
@@ -13,12 +13,12 @@ job "jml" {
       provider = "nomad"
       tags = [
         "traefik.enable=true",
-        "traefik.http.routers.jml.rule=Host(`anmal.datasektionen.se`)",
+        "traefik.http.routers.jml.rule=Host(`anmal.betasektionen.se`)",
         "traefik.http.routers.jml.tls.certresolver=default",
       ]
     }
 
-    task "jml" {
+    task "jml-dev" {
       driver = "docker"
 
       config {
@@ -29,7 +29,7 @@ job "jml" {
       template {
         data        = <<ENV
 PORT={{ env "NOMAD_PORT_http" }}
-{{ with nomadVar "nomad/jobs/jml" }}
+{{ with nomadVar "nomad/jobs/jml-dev" }}
 DATABASE_URL=postgres://jml:{{ .db_password }}@postgres.dsekt.internal:5432/jml
 OIDC_CLIENT_ID={{ .oidc_client_id }}
 OIDC_CLIENT_SECRET={{ .oidc_client_secret }}
