@@ -8,7 +8,7 @@ job "jml-dev" {
     }
 
     service {
-      name     = "jml"
+      name     = "jml-dev"
       port     = "http"
       provider = "nomad"
       tags = [
@@ -43,7 +43,7 @@ LOGIN_API_URL=http://sso.nomad.dsekt.internal/legacyapi
 SPAM_API_URL=https://spam.datasektionen.se/legacy/api
 GOOGLE_RECAPTCHA_API_URL=https://www.google.com/recaptcha/api/siteverify
 OIDC_ISSUER_BASE_URL=https://sso.datasektionen.se/op
-OIDC_BASE_URL=https://jml.datasektionen.se
+OIDC_BASE_URL=https://anmal.betasektionen.se
 ENV
         destination = "local/.env"
         env         = true
