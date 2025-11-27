@@ -38,7 +38,6 @@ app.use(auth({
         logout: "/api/logout",
     },
     authorizationParams: {
-        response_type: 'code',
         scope: 'openid profile email permissions',
     },
 }));
