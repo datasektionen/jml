@@ -3,44 +3,70 @@ import morgan from 'morgan';
 import cors from 'cors';
 import path from "path";
 import session from 'express-session';
-import { auth } from 'express-openid-connect';
 
 import apiRouter from './routes/api';
 import configuration from './common/configuration';
 import prisma from './common/client';
+import { OidcUser } from 'common/types';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 app.use(session({
-    secret: configuration.SESSION_SECRET!,
+    secret: configuration.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: {
-        secure: configuration.NODE_ENV === "production",
-        httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000
-    }
 }));
 
-app.use(auth({
-    authRequired: false,
-    auth0Logout: true,
-    baseURL: configuration.OIDC_BASE_URL,
-    clientID: configuration.OIDC_CLIENT_ID!,
-    clientSecret: configuration.OIDC_CLIENT_SECRET!,
-    issuerBaseURL: configuration.OIDC_ISSUER_BASE_URL!,
-    secret: configuration.SESSION_SECRET!,
-    routes: {
-        login: "/api/login",
-        callback: "/api/callback",
-        logout: "/api/logout",
-    },
-    authorizationParams: {
+let client: any;
+
+async function initOIDC() {
+    const { Issuer } = await import('openid-client');
+    const issuer = await Issuer.discover(configuration.OIDC_ISSUER!);
+
+    client = new issuer.Client({
+        client_id: configuration.OIDC_CLIENT_ID,
+        client_secret: configuration.OIDC_CLIENT_SECRET,
+        redirect_uris: [configuration.REDIRECT_URL],
+    });
+
+    console.log('OIDC client initialized');
+}
+
+initOIDC();
+
+app.get('/login', (req, res) => {
+    const authUrl = client.authorizationUrl({
         scope: 'openid profile email permissions',
-    },
-}));
+    });
+
+    res.redirect(authUrl);
+});
+
+// Callback
+app.get('/oidc/callback', async (req, res, next) => {
+    try {
+        const params = client.callbackParams(req);
+        const tokenSet = await client.callback(
+            configuration.REDIRECT_URL,
+            params
+        );
+        const user = await client.userinfo(tokenSet.access_token)
+        req.session.user = user
+
+        res.redirect('/');
+    } catch (err) {
+        next(err);
+    }
+});
+
+// Logout
+app.get('/logout', (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/');
+    });
+});
 
 app.use((req, res, next) => {
     next();
@@ -61,12 +87,12 @@ setInterval(() => {
                     id
                 }
             })
-            .then(() => {
-                console.log(`Deleted ${id}`)
-            })
+                .then(() => {
+                    console.log(`Deleted ${id}`)
+                })
         }
     })()
-}, 3600*1000)
+}, 3600 * 1000)
 
 // Log requests to console
 // Don't log when NODE_ENV == testing

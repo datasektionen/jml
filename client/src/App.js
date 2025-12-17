@@ -34,7 +34,7 @@ const App = () => {
                         system_name: 'jml',
                         color_scheme: 'cerise',
                         links: methoneLinks,
-                        login_href: hasToken ? '/api/logout' : '/api/login',
+                        login_href: hasToken ? '/logout' : '/login',
                         login_text: hasToken ? 'Logga ut' : 'Logga in',
                     }}
                 />

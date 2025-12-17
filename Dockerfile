@@ -1,4 +1,4 @@
-FROM node:12-alpine AS base
+FROM node:18-alpine AS base
 
 FROM base AS builder
 
@@ -13,6 +13,7 @@ RUN npm ci
 
 ARG REACT_APP_RECAPTCHA_PUBLIC_KEY
 ENV REACT_APP_RECAPTCHA_PUBLIC_KEY=$REACT_APP_RECAPTCHA_PUBLIC_KEY
+ENV NODE_OPTIONS="--openssl-legacy-provider"
 
 RUN npm run build
 
@@ -20,10 +21,10 @@ FROM builder AS dev
 
 RUN apk add --no-cache socat
 
-CMD ["sh", "-c", "(npm run prestart && PORT=8001 npm run dev) & (cd client && PORT=8002 npm start) & (socat TCP-LISTEN:7003,fork TCP:nyckeln:7003)"]
+CMD ["npm", "start"]
 
 # Production image; runtime
-FROM node:12-alpine
+FROM node:18-alpine
 
 RUN addgroup --system --gid 1001 www
 RUN adduser --no-create-home --system --uid 1001 --ingroup www www
