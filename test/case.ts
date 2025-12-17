@@ -6,12 +6,15 @@ import { StatusCodes } from 'http-status-codes';
 import app from '../app';
 import { create, getAll } from '../functions/api/case';
 import prisma from '../common/client';
+import { Sql } from '@prisma/client/runtime/library';
 
 chai.use(chaiHttp);
 
 describe("case tests", () => {
     before(() => {
-        prisma.$executeRaw('DELETE FROM "Case"');
+        prisma.$executeRaw`
+          DELETE FROM "Case"
+        `;
     });
 
     describe("unit tests", () => {

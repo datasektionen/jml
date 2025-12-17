@@ -12,7 +12,7 @@ if (!process.env.OIDC_CLIENT_SECRET && process.env.NODE_ENV !== "testing") {
     process.exit(-1);
 }
 
-if (!process.env.OIDC_ISSUER_BASE_URL && process.env.NODE_ENV !== "testing") {
+if (!process.env.OIDC_ISSUER && process.env.NODE_ENV !== "testing") {
     console.log("No OIDC_ISSUER_BASE_URL set. Exiting...");
     process.exit(-1);
 }
@@ -25,11 +25,11 @@ if (!process.env.SESSION_SECRET && process.env.NODE_ENV !== "testing") {
 const configuration = {
     PORT: process.env.PORT ?? 8080,
     NODE_ENV: process.env.NODE_ENV ?? "production",
-    OIDC_CLIENT_ID: process.env.OIDC_CLIENT_ID,
+    OIDC_CLIENT_ID: process.env.OIDC_CLIENT_ID ?? "anmal",
     OIDC_CLIENT_SECRET: process.env.OIDC_CLIENT_SECRET,
-    OIDC_ISSUER_BASE_URL: process.env.OIDC_ISSUER_BASE_URL,
-    OIDC_BASE_URL: process.env.OIDC_BASE_URL ?? `http://localhost:${process.env.PORT ?? 8080}`,
-    SESSION_SECRET: process.env.SESSION_SECRET,
+    OIDC_ISSUER: process.env.OIDC_ISSUER,
+    REDIRECT_URL: process.env.REDIRECT_URL ?? "https://anmal.datasektionen.se/oidc/callback",
+    SESSION_SECRET: process.env.SESSION_SECRET!,
     SPAM_API_URL: process.env.SPAM_API_URL ?? "https://spam.datasektionen.se/api",
     SPAM_API_KEY: process.env.SPAM_API_KEY,
     SEND_MAIL_IN_DEVELOPMENT: Boolean(process.env.SEND_MAIL_IN_DEVELOPMENT ?? false),

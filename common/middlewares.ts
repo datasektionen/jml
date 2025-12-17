@@ -6,6 +6,7 @@ import configuration from './configuration';
 import axios from 'axios';
 import { OidcUser, Permission } from './types';
 import { IUserRequest } from './requests';
+import session from 'express-session';
 
 export const verifyRecaptchaValue = async (req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> => {
     const body = {
@@ -40,14 +41,7 @@ export const validationCheck = (req: express.Request, res: express.Response, nex
 };
 
 export const authorizeOidc = (req: express.Request, res: express.Response, next: express.NextFunction): void => {
-    const oidc = (req as any).oidc;
-
-    if (!oidc || !oidc.isAuthenticated()) {
-        unauthorizedResponse(res);
-        return;
-    }
-
-    const user = oidc.user as OidcUser;
+    const user = req.session.user;
 
     if (!user) {
         unauthorizedResponse(res);
@@ -70,14 +64,7 @@ export const authorizeOidc = (req: express.Request, res: express.Response, next:
 
 export const silentAuthorization = async (req: IUserRequest, res: express.Response, next: express.NextFunction): Promise<void> => {
     try {
-        const oidc = (req as any).oidc;
-
-        if (!oidc || !oidc.isAuthenticated()) {
-            next();
-            return;
-        }
-
-        const user = oidc.user as OidcUser;
+        const user = req.session.user;
 
         if (!user) {
             next();

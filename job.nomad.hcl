@@ -42,8 +42,8 @@ NODE_ENV=production
 LOGIN_API_URL=http://sso.nomad.dsekt.internal/legacyapi
 SPAM_API_URL=https://spam.datasektionen.se/legacy/api
 GOOGLE_RECAPTCHA_API_URL=https://www.google.com/recaptcha/api/siteverify
-OIDC_ISSUER_BASE_URL=https://sso.datasektionen.se/op
-OIDC_BASE_URL=https://anmal.datasektionen.se
+OIDC_ISSUER=https://sso.datasektionen.se/op
+REDIRECT_URL=https://anmal.datasektionen.se/oidc/callback
 ENV
         destination = "local/.env"
         env         = true

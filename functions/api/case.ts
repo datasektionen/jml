@@ -144,7 +144,7 @@ export const deleteCase = async (id: number): Promise<ApiResponse> => {
             body: "Deleted case: " + id,
         };
     } catch (err) {
-        if (err.code === "P2025") return {
+        if ((err as any).code === "P2025") return {
             error: "Case not found.",
         };
 

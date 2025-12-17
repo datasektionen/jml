@@ -20,10 +20,14 @@ export interface KthUser {
     user: string;
 }
 
-declare global {
-    namespace Express {
-      interface Request {
+import 'express';
+
+declare module 'express-serve-static-core' {
+    interface Request {
+        session: import('express-session').Session & {
+            user?: OidcUser;
+        };
         user?: OidcUser;
-      }
     }
 }
+
