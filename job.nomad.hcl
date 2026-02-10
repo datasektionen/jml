@@ -40,7 +40,7 @@ RECAPTCHA_SECRET_KEY={{ .recaptcha_secret_key }}
 {{ end }}
 NODE_ENV=production
 LOGIN_API_URL=http://sso.nomad.dsekt.internal/legacyapi
-SPAM_API_URL=https://spam.datasektionen.se/legacy/api
+SPAM_API_URL=https://spam.datasektionen.se/api/legacy
 GOOGLE_RECAPTCHA_API_URL=https://www.google.com/recaptcha/api/siteverify
 OIDC_ISSUER=https://sso.datasektionen.se/op
 REDIRECT_URL=https://anmal.datasektionen.se/oidc/callback
