@@ -8,7 +8,7 @@ const translations = {
         header: "Anmälan och frågor",
         languageToggle: "English",
         intro: {
-            greeting: "Hej! Jag heter Johanna och är Jämlikhets-, Mångfalds- och Likabehandlingsansvarig (JMLA) här på Datasektionen.",
+            greeting: "Hej! Jag heter Tina och är Jämlikhets-, Mångfalds- och Likabehandlingsansvarig (JMLA) här på Datasektionen.",
             purpose: "Min uppgift är att se till att du känner dig trygg, inkluderad och välkommen, men framförallt att alla sektionens medlemmar behandlas lika.",
             canDo: "Här kan du göra två saker:",
             listItem1: "Ställa en fråga till mig (egentligen om vad som helst, men jag kanske inte är så bra på att svara på icke-JML-frågor 😉)",
@@ -41,7 +41,7 @@ const translations = {
         header: "Report and Questions",
         languageToggle: "Swedish",
         intro: {
-            greeting: "Hi there! My name is Johanna and I am Head of Equality, Diversity and Equal Treatment (JMLA) here at the Computer Science Chapter.",
+            greeting: "Hi there! My name is Tina and I am Head of Equality, Diversity and Equal Treatment (JMLA) here at the Computer Science Chapter.",
             purpose: "My purpose is to make sure that you feel safe, included and welcome, but first and foremost, to make sure that all the Chapter's members are treated equally.",
             canDo: "Here, you can do two things:",
             listItem1: "Ask me a question (or anything else really, but I might not be that good at answering non-JML questions 😉)",
