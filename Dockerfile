@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:22.23.4-alpine3.24 AS base
 
 FROM base AS builder
 
@@ -24,7 +24,7 @@ RUN apk add --no-cache socat
 CMD ["npm", "start"]
 
 # Production image; runtime
-FROM node:18-alpine
+FROM node:22.23.4-alpine3.24
 
 RUN addgroup --system --gid 1001 www
 RUN adduser --no-create-home --system --uid 1001 --ingroup www www
